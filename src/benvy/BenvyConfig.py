@@ -14,13 +14,14 @@ class BenvyConfig(EnvConfig):
         }
 
     def get_setup_steps(self, container: Container):
+        steps = [container.get_libgit2_installer()]
+
         if not container.get_databricks_connect_detector().detect():
             container.get_logger().debug("databricks-connect not installed, skipping benvy setup steps")
 
-            return []
+            return steps
 
-        return [
-            container.get_libgit2_installer(),
+        return steps + [
             container.get_winutils_downloader(),
             container.get_databricks_connect_config_creator(),
             container.get_java_setup(),
