@@ -16,16 +16,7 @@ run_tests() {
 }
 
 build_benvy() {
-  local REPOSITORY_SHORTNAME="$1"
-  CONDA_BASE_DIR=$(conda info --base | sed 's/\\/\//g')
-
-  if [ -d "$CONDA_BASE_DIR/Scripts" ]; then
-    CONDA_BIN_DIR="$CONDA_BASE_DIR/Scripts" # Windows
-  else
-    CONDA_BIN_DIR="$CONDA_BASE_DIR/bin" # Linux/Mac
-  fi
-
-  $CONDA_BIN_DIR/pip install .
+  conda run -n base pip install .
   cd $REPOSITORY_SHORTNAME
 }
 
@@ -34,7 +25,7 @@ test_init() {
 
   echo "******* 1. invocation of benvy-init *******"
 
-  $CONDA_BIN_DIR/benvy-init -y --verbose
+  conda run -n base benvy-init -y --verbose
   eval "$(conda shell.$SHELLNAME hook)"
   conda activate "$PWD/.venv"
   ./run_tests.sh
@@ -46,7 +37,7 @@ test_init_2() {
 
   ~/.poetry/bin/poetry add exponea-python-sdk="0.1.*"
   pip uninstall -y exponea-python-sdk
-  $CONDA_BIN_DIR/benvy-init -y --verbose
+  conda run -n base benvy-init -y --verbose
   ./run_tests.sh
 }
 
