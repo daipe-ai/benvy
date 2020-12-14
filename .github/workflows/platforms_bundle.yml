@@ -18,7 +18,7 @@ jobs:
         with:
           repository: 'bricksflow/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'v0.5.9'
+          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           miniconda-version: 'py38_4.8.3'
@@ -37,7 +37,7 @@ jobs:
         with:
           repository: 'bricksflow/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'v0.5.9'
+          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           miniconda-version: 'py38_4.8.3'
@@ -60,7 +60,7 @@ jobs:
         with:
           repository: 'bricksflow/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'v0.5.9'
+          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           miniconda-version: 'py38_4.8.3'
