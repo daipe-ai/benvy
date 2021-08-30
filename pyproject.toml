@@ -26,7 +26,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.6,<4.0"
-penvy = "1.0.*"
+penvy = "1.1.*"
 
 [tool.poetry.dev-dependencies]
 pylint = "2.4.*"
