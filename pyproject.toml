@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "benvy"
 version = "1.0.1"
-description = "Bricksflow framework development environment initializer"
+description = "Daipe framework development environment initializer"
 readme = "README.md"
 repository = "https://github.com/bricksflow/benvy"
 
