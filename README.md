@@ -1,6 +1,6 @@
 # Development environment initialization
 
-for the [Bricksflow stack](https://github.com/bricksflow/bricksflow)
+for the [Daipe stack](https://docs.daipe.ai/)
 
 ### What it does:
 

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "benvy"
 version = "1.0.1"
-description = "Bricksflow framework development environment initializer"
+description = "Daipe framework development environment initializer"
 readme = "README.md"
 repository = "https://github.com/bricksflow/benvy"
 
@@ -26,7 +26,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.6,<4.0"
-penvy = "1.0.*"
+penvy = "1.1.*"
 
 [tool.poetry.dev-dependencies]
 pylint = "2.4.*"
