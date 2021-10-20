@@ -40,3 +40,100 @@ class Container(PenvyContainer):
         from benvy.git.Libgit2Installer import Libgit2Installer
 
         return Libgit2Installer(self.get_logger())
+
+    @diservice
+    def get_dbx_poetry_downloader(self):
+        from benvy.databricks.repos.install.PoetryDownloader import PoetryDownloader
+
+        return PoetryDownloader(
+            self._parameters["poetry"]["version"],
+            self._parameters["poetry"]["archive_url"],
+            self._parameters["poetry"]["archive_path"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_poetry_install_script_downloader(self):
+        from benvy.databricks.repos.install.PoetryInstallScriptDownloader import PoetryInstallScriptDownloader
+
+        return PoetryInstallScriptDownloader(
+            self._parameters["poetry"]["install_script_url"],
+            self._parameters["poetry"]["install_script_path"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_poetry_installer(self):
+        from benvy.databricks.repos.install.PoetryInstaller import PoetryInstaller
+
+        return PoetryInstaller(
+            self._parameters["poetry"]["version"],
+            self._parameters["poetry"]["home"],
+            self._parameters["poetry"]["executable"],
+            self._parameters["poetry"]["archive_path"],
+            self._parameters["poetry"]["install_script_path"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_package_installer(self):
+        from benvy.databricks.repos.install.PackageInstaller import PackageInstaller
+
+        return PackageInstaller(
+            self._parameters["project"]["dir"],
+            self._parameters["poetry"]["executable"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_flake_installer(self):
+        from benvy.databricks.repos.install.FlakeInstaller import FlakeInstaller
+
+        return FlakeInstaller(
+            self.get_dependencies_loader(),
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_sys_path_appender(self):
+        from benvy.databricks.repos.setup.SysPathAppender import SysPathAppender
+
+        return SysPathAppender(
+            self._parameters["project"]["dir"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_project_root_dir_setter(self):
+        from benvy.databricks.repos.setup.ProjectRootDirSetter import ProjectRootDirSetter
+
+        return ProjectRootDirSetter(
+            self._parameters["project"]["dir"],
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_app_env_setter(self):
+        from benvy.databricks.repos.setup.AppEnvSetter import AppEnvSetter
+
+        return AppEnvSetter(
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_bootstrap_env_setter(self):
+        from benvy.databricks.repos.setup.BootstrapEnvSetter import BootstrapEnvSetter
+
+        return BootstrapEnvSetter(
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_flake_setupper(self):
+        from benvy.databricks.repos.setup.FlakeSetupper import FlakeSetupper
+
+        return FlakeSetupper(
+            self.get_pyproject_loader(),
+            self.get_dependencies_loader(),
+            self.get_logger(),
+        )
