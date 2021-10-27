@@ -86,15 +86,6 @@ class Container(PenvyContainer):
         )
 
     @diservice
-    def get_dbx_flake_installer(self):
-        from benvy.databricks.repos.install.FlakeInstaller import FlakeInstaller
-
-        return FlakeInstaller(
-            self.get_dependencies_loader(),
-            self.get_logger(),
-        )
-
-    @diservice
     def get_dbx_sys_path_appender(self):
         from benvy.databricks.repos.setup.SysPathAppender import SysPathAppender
 
@@ -125,15 +116,5 @@ class Container(PenvyContainer):
         from benvy.databricks.repos.setup.BootstrapEnvSetter import BootstrapEnvSetter
 
         return BootstrapEnvSetter(
-            self.get_logger(),
-        )
-
-    @diservice
-    def get_dbx_flake_setupper(self):
-        from benvy.databricks.repos.setup.FlakeSetupper import FlakeSetupper
-
-        return FlakeSetupper(
-            self.get_pyproject_loader(),
-            self.get_dependencies_loader(),
             self.get_logger(),
         )
