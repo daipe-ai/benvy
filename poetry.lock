@@ -303,7 +303,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
 [[package]]
 name = "penvy"
-version = "1.2.0b1"
+version = "1.2.0"
 description = "Pyfony framework development environment initializer"
 category = "main"
 optional = false
@@ -553,7 +553,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<4.0"
-content-hash = "fc041395729c82f34a2264eb8710658163708fab2ac90a5637d8f2060bc57d8b"
+content-hash = "82a07d657d6b5317cdecf5293c38840a4bfd5e8afe23dbb20f8ea3bccc547555"
 
 [metadata.files]
 appdirs = [
@@ -679,7 +679,7 @@ pathspec = [
     {file = "pathspec-0.9.0.tar.gz", hash = "sha256:e564499435a2673d586f6b2130bb5b95f04a3ba06f81b8f895b651a3c76aabb1"},
 ]
 penvy = [
-    {file = "penvy-1.2.0b1-py3-none-any.whl", hash = "sha256:3f3485f3bbcefc8854b3286f4f479e3ec3bd64eb3af8240b6689c3d6fa8f86fc"},
+    {file = "penvy-1.2.0-py3-none-any.whl", hash = "sha256:9de0c776f6fae8101885e6e43abe9b41a8a8f75ff1cea52428f58e4e85a54c7d"},
 ]
 pep8-naming = [
     {file = "pep8-naming-0.11.1.tar.gz", hash = "sha256:a1dd47dd243adfe8a83616e27cf03164960b507530f155db94e10b36a6cd6724"},
