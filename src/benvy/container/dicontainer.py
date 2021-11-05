@@ -104,14 +104,6 @@ class Container(PenvyContainer):
         )
 
     @diservice
-    def get_dbx_app_env_setter(self):
-        from benvy.databricks.repos.setup.AppEnvSetter import AppEnvSetter
-
-        return AppEnvSetter(
-            self.get_logger(),
-        )
-
-    @diservice
     def get_dbx_bootstrap_env_setter(self):
         from benvy.databricks.repos.setup.BootstrapEnvSetter import BootstrapEnvSetter
 

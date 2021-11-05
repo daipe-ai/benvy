@@ -7,6 +7,5 @@ class BootstrapSetupEnvConfig(BootstrapConfig):
         return [
             container.get_dbx_sys_path_appender(),
             container.get_dbx_project_root_dir_setter(),
-            container.get_dbx_app_env_setter(),
             container.get_dbx_bootstrap_env_setter(),
         ]
