@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 from logging import Logger
 from penvy.setup.SetupStepInterface import SetupStepInterface
-from penvy.shell.runner import run_shell_command
+from penvy.shell.runner import run_with_live_output
 
 
 class PoetryInstaller(SetupStepInterface):
@@ -25,7 +25,7 @@ class PoetryInstaller(SetupStepInterface):
     def run(self):
         self._logger.info("Installing poetry")
 
-        run_shell_command(
+        run_with_live_output(
             f"POETRY_HOME={self._poetry_home} {sys.executable} {self._poetry_install_script_path} --file {self._poetry_archive_path}",
             shell=True,
         )

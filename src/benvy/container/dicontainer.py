@@ -42,6 +42,13 @@ class Container(PenvyContainer):
         return Libgit2Installer(self.get_logger())
 
     @diservice
+    def get_databricks_context(self):
+        from benvy.databricks.DatabricksContext import DatabricksContext
+        from benvy.databricks.dbutils.DBUtilsResolver import resolve_dbutils
+
+        return DatabricksContext(resolve_dbutils())
+
+    @diservice
     def get_dbx_poetry_downloader(self):
         from benvy.databricks.repos.install.PoetryDownloader import PoetryDownloader
 
@@ -108,5 +115,16 @@ class Container(PenvyContainer):
         from benvy.databricks.repos.setup.BootstrapEnvSetter import BootstrapEnvSetter
 
         return BootstrapEnvSetter(
+            self.get_logger(),
+        )
+
+    @diservice
+    def get_dbx_poetry_wrapper(self):
+        from benvy.databricks.repos.poetry.PoetryWrapper import PoetryWrapper
+
+        return PoetryWrapper(
+            self._parameters["project"]["dir"],
+            self._parameters["poetry"]["executable"],
+            self.get_databricks_context(),
             self.get_logger(),
         )
