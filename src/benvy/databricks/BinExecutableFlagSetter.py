@@ -36,9 +36,12 @@ class BinExecutableFlagSetter(SetupStepInterface):
         )
 
     def _get_pyspark_bin_dir(self):
-        command = f"{self._conda_executable_path} run -p {self._venv_dir} pip show databricks-connect | grep Location:"
-        pyspark_location = run_and_read_line(command, shell=True)
-        site_packages_dir = pyspark_location[10:]  # remove "Location: "
+        command = (
+            f"{self._conda_executable_path} run -p {self._venv_dir} "
+            f'python -c \'import sysconfig; print(sysconfig.get_paths()["purelib"], end="")\''
+        )
+
+        site_packages_dir = run_and_read_line(command, shell=True)
 
         return site_packages_dir + "/pyspark/bin"
 
