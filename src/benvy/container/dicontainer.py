@@ -119,12 +119,20 @@ class Container(PenvyContainer):
         )
 
     @diservice
+    def get_dbx_repo_file_uploader(self):
+        from benvy.databricks.repos.uploader.RepoFileUploader import RepoFileUploader
+
+        return RepoFileUploader(
+            self.get_databricks_context(),
+        )
+
+    @diservice
     def get_dbx_poetry_wrapper(self):
         from benvy.databricks.repos.poetry.PoetryWrapper import PoetryWrapper
 
         return PoetryWrapper(
             self._parameters["project"]["dir"],
             self._parameters["poetry"]["executable"],
-            self.get_databricks_context(),
+            self.get_dbx_repo_file_uploader(),
             self.get_logger(),
         )
