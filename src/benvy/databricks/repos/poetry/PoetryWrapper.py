@@ -3,9 +3,8 @@ import shutil
 import tempfile
 from typing import List
 from logging import Logger
-from urllib import request
 from penvy.shell.runner import run_with_live_output
-from benvy.databricks.DatabricksContext import DatabricksContext
+from benvy.databricks.repos.uploader.RepoFileUploader import RepoFileUploader
 
 
 class PoetryWrapper:
@@ -13,12 +12,12 @@ class PoetryWrapper:
         self,
         project_root_path: str,
         poetry_executable: str,
-        databricks_context: DatabricksContext,
+        repo_file_uploader: RepoFileUploader,
         logger: Logger,
     ):
         self._project_root_path = project_root_path
         self._poetry_executable = poetry_executable
-        self._databricks_context = databricks_context
+        self._repo_file_uploader = repo_file_uploader
         self._logger = logger
 
     def run_command(self, args: List[str]):
@@ -106,31 +105,6 @@ class PoetryWrapper:
         shutil.copy(f"{self._project_root_path}/poetry.lock", tmp_dir)
 
     def _upload_poetry_files_to_repo(self, tmp_dir: str):
-        dbx_host = self._databricks_context.get_host()
-        dbx_token = self._databricks_context.get_token()
-
         repo_path = self._project_root_path.lstrip("/Workspace/")
-        pyproject_src_path = f"{tmp_dir}/pyproject.toml"
-        poetry_lock_src_path = f"{tmp_dir}/poetry.lock"
-        pyproject_dst_url = f"{dbx_host}/api/2.0/workspace-files/{repo_path}/pyproject.toml?overwrite=true"
-        poetry_lock_dst_url = f"{dbx_host}/api/2.0/workspace-files/{repo_path}/poetry.lock?overwrite=true"
-        headers = {
-            "Authorization": f"Bearer {dbx_token}",
-        }
-
-        with open(pyproject_src_path, "rb") as f:
-            pyproject_content = f.read()
-
-        with open(poetry_lock_src_path, "rb") as f:
-            poetry_lock_content = f.read()
-
-        self._api_post(pyproject_dst_url, headers, pyproject_content)
-        self._api_post(poetry_lock_dst_url, headers, poetry_lock_content)
-
-    def _api_post(self, url: str, headers: dict, body: bytes):
-        req = request.Request(url, data=body)
-
-        for key, value in headers.items():
-            req.add_header(key, value)
-
-        return request.urlopen(req)
+        self._repo_file_uploader.upload_files_to_repo(f"{tmp_dir}/pyproject.toml", repo_path)
+        self._repo_file_uploader.upload_files_to_repo(f"{tmp_dir}/poetry.lock", repo_path)
