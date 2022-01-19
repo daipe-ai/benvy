@@ -90,6 +90,18 @@ class Container(PenvyContainer):
             self._parameters["project"]["dir"],
             self._parameters["poetry"]["executable"],
             self.get_logger(),
+            include_dev_dependencies=False,
+        )
+
+    @diservice
+    def get_dbx_dev_package_installer(self):
+        from benvy.databricks.repos.install.PackageInstaller import PackageInstaller
+
+        return PackageInstaller(
+            self._parameters["project"]["dir"],
+            self._parameters["poetry"]["executable"],
+            self.get_logger(),
+            include_dev_dependencies=True,
         )
 
     @diservice
@@ -136,3 +148,70 @@ class Container(PenvyContainer):
             self.get_dbx_repo_file_uploader(),
             self.get_logger(),
         )
+
+    @diservice
+    def get_dbx_pylint_wrapper(self):
+        from benvy.databricks.repos.pylint.PylintWrapper import PylintWrapper
+        from benvy.databricks.repos.pylint.PylintExecutableResolver import resolve_pylint
+
+        return PylintWrapper(
+            self._parameters["project"]["dir"],
+            resolve_pylint(),
+            self.get_dbx_pylint_results_enhancer(),
+            self.get_dbx_pylint_html_displayer(),
+            self.get_dbx_notebooks_and_files_exporter(),
+        )
+
+    @diservice
+    def get_dbx_notebooks_and_files_exporter(self):
+        from benvy.databricks.repos.export.NotebooksAndFilesExporter import NotebooksAndFilesExporter
+
+        return NotebooksAndFilesExporter(
+            self._parameters["project"]["dir"],
+            self.get_dbx_workspace_api_factory().create(),
+            self.get_dbx_notebook_converter(),
+        )
+
+    @diservice
+    def get_dbx_pylint_html_displayer(self):
+        from benvy.databricks.repos.pylint.PylintHTMLDisplayer import PylintHTMLDisplayer
+
+        return PylintHTMLDisplayer(
+            self.get_databricks_context(),
+        )
+
+    @diservice
+    def get_dbx_pylint_results_enhancer(self):
+        from benvy.databricks.repos.pylint.PylintResultsEnhancer import PylintResultsEnhancer
+
+        return PylintResultsEnhancer()
+
+    @diservice
+    def get_dbx_workspace_api_factory(self):
+        from benvy.databricks.api.WorkspaceApiFactory import WorkspaceApiFactory
+
+        return WorkspaceApiFactory(
+            self.get_databricks_context(),
+        )
+
+    @diservice
+    def get_dbx_notebook_converter(self):
+        from benvy.databricks.notebook.NotebookConverter import NotebookConverter
+
+        return NotebookConverter(
+            self.get_dbx_commands_converter(),
+        )
+
+    @diservice
+    def get_dbx_commands_converter(self):
+        from benvy.databricks.notebook.CommandsConverter import CommandsConverter
+
+        return CommandsConverter(
+            self.get_dbx_command_converter(),
+        )
+
+    @diservice
+    def get_dbx_command_converter(self):
+        from benvy.databricks.notebook.CommandConverter import CommandConverter
+
+        return CommandConverter()
