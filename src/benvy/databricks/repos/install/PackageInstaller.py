@@ -13,10 +13,12 @@ class PackageInstaller(SetupStepInterface):
         project_root_path: str,
         poetry_executable: str,
         logger: Logger,
+        include_dev_dependencies: bool,
     ):
         self._project_root_path = project_root_path
         self._poetry_executable = poetry_executable
         self._logger = logger
+        self.__include_dev_dependencies = include_dev_dependencies
 
     def run(self):
         self._logger.info("Installing dependencies")
@@ -37,6 +39,11 @@ class PackageInstaller(SetupStepInterface):
         shutil.copy(pyproject_path, temp_dir)
         shutil.copy(poetry_lock_path, temp_dir)
 
-        run_shell_command(f"{self._poetry_executable} export --without-hashes -o {requirements_txt_path}", cwd=temp_dir, shell=True)
+        options = ["--without-hashes", f"-o {requirements_txt_path}"]
+
+        if self.__include_dev_dependencies:
+            options.append("--dev")
+
+        run_shell_command(f"{self._poetry_executable} export {' '.join(options)}", cwd=temp_dir, shell=True)
 
         IPython.get_ipython().run_line_magic("pip", f"install -r {requirements_txt_path}")
