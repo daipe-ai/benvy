@@ -13,7 +13,7 @@ class BootstrapConfig(EnvConfig):
             "project": {
                 # path in DBX Repos is like /Workspace/Repos/folder/repository/src/...
                 # so we take first 4 parts which is the root of the project
-                "dir": os.path.join(*Path.cwd().parts[0:5]),
+                "dir": self.__resolve_path(),
             },
             "poetry": {
                 "version": poetry_version,
@@ -29,3 +29,11 @@ class BootstrapConfig(EnvConfig):
                 "level": logging.INFO,
             },
         }
+
+    def __resolve_path(self):
+        path = Path.cwd()
+
+        if path.as_posix().startswith("/local_disk"):
+            return os.path.join("/", "Workspace", *path.parts[3:6])
+
+        return os.path.join(*Path.cwd().parts[0:5])

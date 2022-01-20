@@ -6,4 +6,5 @@ def is_databricks():
 
 
 def is_databricks_repo():
-    return is_databricks() and os.getcwd().startswith("/Workspace/Repos")
+    cwd = os.getcwd()
+    return is_databricks() and (cwd.startswith("/Workspace/Repos") or cwd.startswith("/local_disk0/.wsfs/Repos"))
