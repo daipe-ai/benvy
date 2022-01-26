@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Optional
 from benvy.databricks.repos.export.ExportObject import ExportObject
 
 
@@ -8,6 +8,10 @@ class PylintResultsEnhancer:
             path = result["path"]
             line_number = result["line"]
             export_object = self._get_export_object_by_path(path, export_objects)
+
+            if export_object is None:
+                pylint_results[index]["file_type"] = "OTHER"
+                continue
 
             if export_object.databricks_object_type == "NOTEBOOK":
                 notebook_id = export_object.databricks_object_id
@@ -25,10 +29,12 @@ class PylintResultsEnhancer:
                 pylint_results[index]["file_type"] = "FILE"
                 pylint_results[index]["file_id"] = export_object.databricks_object_id
 
-    def _get_export_object_by_path(self, path: str, export_objects: List[ExportObject]) -> ExportObject:
+    def _get_export_object_by_path(self, path: str, export_objects: List[ExportObject]) -> Optional[ExportObject]:
         for obj in export_objects:
             if path in obj.local_path:
                 return obj
+
+        return None
 
     def _get_cell_number(self, notebook_source: str, line_number: int) -> int:
         cell_number = 0
