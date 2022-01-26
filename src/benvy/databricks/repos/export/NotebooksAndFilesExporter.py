@@ -1,6 +1,7 @@
 import os
 import io
 import json
+import shutil
 import tempfile
 from typing import List
 from zipfile import ZipFile, ZIP_DEFLATED
@@ -61,15 +62,11 @@ class NotebooksAndFilesExporter:
             target_path = os.path.join(local_path, file_relative_path)
             object_id = file.object_id
 
-            with open(dbx_filesystem_path, "r") as f:
-                file_src_content = f.read()
-
-            export_objects.append(ExportObject(object_id, object_type, file.path, target_path, file_src_content))
+            export_objects.append(ExportObject(object_id, object_type, file.path, target_path))
 
             os.makedirs(os.path.dirname(target_path), exist_ok=True)
 
-            with open(target_path, "w") as f:
-                f.write(file_src_content)
+            shutil.copy2(dbx_filesystem_path, target_path)
 
         return export_objects
 
