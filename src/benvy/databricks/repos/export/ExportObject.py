@@ -5,7 +5,7 @@ class ExportObject:
         databricks_object_type: str,
         databricks_path: str,
         local_path: str,
-        src_content: str,
+        src_content: str = None,
         dbc_content: dict = None,
     ):
         self._databricks_object_id = databricks_object_id
