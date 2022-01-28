@@ -32,7 +32,9 @@ class BinExecutableFlagSetter(SetupStepInterface):
 
     def should_be_run(self) -> bool:
         return platform.system() != "Windows" and (
-            not os.path.isdir(self._get_pyspark_bin_dir()) or not self._all_files_are_executable(self._get_pyspark_bin_dir())
+            not os.path.isdir(self._venv_dir)
+            or not os.path.isdir(self._get_pyspark_bin_dir())
+            or not self._all_files_are_executable(self._get_pyspark_bin_dir())
         )
 
     def _get_pyspark_bin_dir(self):
