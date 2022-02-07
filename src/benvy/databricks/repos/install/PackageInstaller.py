@@ -39,11 +39,17 @@ class PackageInstaller(SetupStepInterface):
         shutil.copy(pyproject_path, temp_dir)
         shutil.copy(poetry_lock_path, temp_dir)
 
-        options = ["--without-hashes", f"-o {requirements_txt_path}"]
+        export_options = ["--without-hashes", f"-o {requirements_txt_path}"]
 
         if self.__include_dev_dependencies:
-            options.append("--dev")
+            export_options.append("--dev")
 
-        run_shell_command(f"{self._poetry_executable} export {' '.join(options)}", cwd=temp_dir, shell=True)
+        run_shell_command(f"{self._poetry_executable} export {' '.join(export_options)}", cwd=temp_dir, shell=True)
 
-        IPython.get_ipython().run_line_magic("pip", f"install -r {requirements_txt_path}")
+        install_options = [f"-r {requirements_txt_path}"]
+
+        if "DAIPE_DEPENDENCIES_DIR" in os.environ:
+            install_options.append("--no-index")
+            install_options.append(f"--find-links {os.environ['DAIPE_DEPENDENCIES_DIR']}")
+
+        IPython.get_ipython().run_line_magic("pip", f"install {' '.join(install_options)}")
