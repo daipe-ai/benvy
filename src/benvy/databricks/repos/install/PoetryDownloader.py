@@ -2,6 +2,7 @@ import urllib
 from pathlib import Path
 from logging import Logger
 from penvy.setup.SetupStepInterface import SetupStepInterface
+from benvy.mutex.Mutex import Mutex
 
 
 class PoetryDownloader(SetupStepInterface):
@@ -18,9 +19,13 @@ class PoetryDownloader(SetupStepInterface):
         self._logger = logger
 
     def run(self):
-        self._logger.info(f"Downloading poetry {self._poetry_version}")
-        Path(self._download_path).parent.mkdir(parents=True, exist_ok=True)
-        urllib.request.urlretrieve(self._download_url, self._download_path)
+        with Mutex("benvy_poetry_downloader_mutex", timeout=180):
+            if not self.should_be_run():
+                return
+
+            self._logger.info(f"Downloading poetry {self._poetry_version}")
+            Path(self._download_path).parent.mkdir(parents=True, exist_ok=True)
+            urllib.request.urlretrieve(self._download_url, self._download_path)
 
     def get_description(self):
         return f"Download poetry {self._poetry_version}"
