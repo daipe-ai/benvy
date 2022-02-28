@@ -3,7 +3,7 @@ name = "benvy"
 version = "1.3.3"
 description = "Daipe framework development environment initializer"
 readme = "README.md"
-repository = "https://github.com/bricksflow/benvy"
+repository = "https://github.com/daipe-ai/benvy"
 
 license = "MIT"
 

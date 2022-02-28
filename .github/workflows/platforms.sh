@@ -1,6 +1,6 @@
 set_dbx_token() {
-  cp ./bricksflow/.env.dist ./bricksflow/.env
-  sed -i.bak 's/DBX_TOKEN=/DBX_TOKEN=abcdefgh123456789/g' ./bricksflow/.env # set DBX_TOKEN to non-empty value
+  cp ./daipe-project/.env.dist ./daipe-project/.env
+  sed -i.bak 's/DBX_TOKEN=/DBX_TOKEN=abcdefgh123456789/g' ./daipe-project/.env # set DBX_TOKEN to non-empty value
 }
 
 run_tests() {
@@ -28,8 +28,6 @@ test_init() {
   conda run -n base benvy-init -y --verbose
   eval "$(conda shell.$SHELLNAME hook)"
   conda activate "$PWD/.venv"
-  ./run_tests.sh
-  ./pylint.sh
 }
 
 test_init_2() {
@@ -38,7 +36,6 @@ test_init_2() {
   ~/.poetry/bin/poetry add exponea-python-sdk="0.1.*"
   pip uninstall -y exponea-python-sdk
   conda run -n base benvy-init -y --verbose
-  ./run_tests.sh
 }
 
 test_pyfony_env_creation() {
