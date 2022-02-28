@@ -16,12 +16,12 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/checkout@v2
         with:
-          repository: 'bricksflow/databricks-bundle'
+          repository: 'daipe-ai/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
+          ref: 'bd14ddf96356df234c1be9334f89d4fe86704a89'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
-          miniconda-version: 'py38_4.8.3'
+          miniconda-version: 'py39_4.10.3'
       - name: Init
         run: |
           export SHELL=$SHELL # for python to be able to access the bash version
@@ -35,12 +35,12 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/checkout@v2
         with:
-          repository: 'bricksflow/databricks-bundle'
+          repository: 'daipe-ai/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
+          ref: 'bd14ddf96356df234c1be9334f89d4fe86704a89'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
-          miniconda-version: 'py38_4.8.3'
+          miniconda-version: 'py39_4.10.3'
       - name: Install zsh
         run: |
           sudo apt-get install zsh -y
@@ -58,12 +58,12 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/checkout@v2
         with:
-          repository: 'bricksflow/databricks-bundle'
+          repository: 'daipe-ai/databricks-bundle'
           path: 'databricks-bundle'
-          ref: 'c000f3f6800f98a4d90bad22d5762345dccff00e'
+          ref: 'bd14ddf96356df234c1be9334f89d4fe86704a89'
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
-          miniconda-version: 'py38_4.8.3'
+          miniconda-version: 'py39_4.10.3'
       - name: Update PATH
         shell: bash -l {0}
         run: echo "/c/Miniconda3/Scripts" >> $GITHUB_PATH

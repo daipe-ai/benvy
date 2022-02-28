@@ -12,7 +12,7 @@ class Libgit2Installer(SetupStepInterface):
         self._logger = logger
 
     def get_description(self):
-        return "Install libgit2 from brew to support git-based Bricksflow features"
+        return "Install libgit2 from brew to support git-based daipe features"
 
     def run(self):
         # pygit2 vs. libgit2 versions compatibility matrix: https://www.pygit2.org/install.html#version-numbers
