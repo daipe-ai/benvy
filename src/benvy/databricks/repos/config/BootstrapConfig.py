@@ -11,9 +11,9 @@ class BootstrapConfig(EnvConfig):
 
         return {
             "project": {
-                # path in DBX Repos is like /Workspace/Repos/folder/repository/src/...
-                # so we take first 4 parts which is the root of the project
-                "dir": os.path.join(*Path.cwd().parts[0:5]),
+                # path in DBX Repos is like .../Repos/folder/repository/src/...
+                # so we take the parts before and including repository/
+                "dir": os.path.join(*Path.cwd().parts[0:Path.cwd().parts.index('Repos') + 3]),
             },
             "poetry": {
                 "version": poetry_version,
