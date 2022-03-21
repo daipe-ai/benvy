@@ -6,4 +6,4 @@ def is_databricks():
 
 
 def is_databricks_repo():
-    return 'Repos' in os.getcwd()
+    return is_databricks() and 'Repos' in os.getcwd()
