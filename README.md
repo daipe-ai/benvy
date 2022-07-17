@@ -23,25 +23,17 @@ for the [Daipe stack](https://docs.daipe.ai/)
 
 ```
 %sh
-pip install benvy==1.2.0
+pip install benvy==1.3.3
 ```
 
 ```
 from benvy.databricks.repos import bootstrap  # noqa
-from benvy.databricks.detector import is_databricks_repo  # noqa
 
-if is_databricks_repo():
-    bootstrap.install()
+bootstrap.install()
 ```
 
 ```
 from benvy.databricks.repos import bootstrap  # noqa
-from benvy.databricks.detector import is_databricks_repo  # noqa
 
-if is_databricks_repo():
-    bootstrap.setup_env()
-```
-
-```
-# %install_master_package_whl
+bootstrap.setup_env()
 ```
