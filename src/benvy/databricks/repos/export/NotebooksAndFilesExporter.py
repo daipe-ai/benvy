@@ -3,6 +3,7 @@ import io
 import json
 import shutil
 import tempfile
+import uuid
 from typing import List
 from zipfile import ZipFile, ZIP_DEFLATED
 from databricks_cli.workspace.api import WorkspaceApi
@@ -94,7 +95,7 @@ class NotebooksAndFilesExporter:
         if self._dbc_content:
             return self._dbc_content
 
-        dbc_temp_file = tempfile.mktemp()
+        dbc_temp_file = os.path.join(tempfile.gettempdir(), uuid.uuid4().hex)
 
         self._workspace_api.export_workspace(workspace_path, dbc_temp_file, fmt="DBC", is_overwrite=True)
 
