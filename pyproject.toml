@@ -25,7 +25,7 @@ packages = [
 "benvy-init" = "benvy.init:main"
 
 [tool.poetry.dependencies]
-python = ">=3.7,<4.0"
+python = "^3.7"
 penvy = "^1.2.2"
 
 [tool.poetry.dev-dependencies]
