@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "benvy"
-version = "1.3.4"
+version = "1.3.5"
 description = "Daipe framework development environment initializer"
 readme = "README.md"
 repository = "https://github.com/daipe-ai/benvy"
