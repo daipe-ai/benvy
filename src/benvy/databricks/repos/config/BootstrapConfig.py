@@ -1,8 +1,7 @@
-import os
 import logging
-from pathlib import Path
 from penvy.env.EnvConfig import EnvConfig
 from penvy.PenvyConfig import PenvyConfig
+from benvy.databricks.repos import project_root_resolver
 
 
 class BootstrapConfig(EnvConfig):
@@ -11,11 +10,7 @@ class BootstrapConfig(EnvConfig):
 
         return {
             "project": {
-                # path in DBX Repos is like /Workspace/Repos/folder/repository/src/...
-                # so we take first 4 parts which is the root of the project
-                "dir": os.path.join(*Path.cwd().parts[0:5])
-                if "DAIPE_PROJECT_ROOT_DIR" not in os.environ
-                else os.environ["DAIPE_PROJECT_ROOT_DIR"],
+                "dir": project_root_resolver.resolve(),
             },
             "poetry": {
                 "version": poetry_version,
