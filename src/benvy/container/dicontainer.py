@@ -105,6 +105,16 @@ class Container(PenvyContainer):
         )
 
     @diservice
+    def get_dbx_dbr_dependencies_checker(self):
+        from benvy.databricks.repos.install.DbrDependenciesChecker import DbrDependenciesChecker
+
+        return DbrDependenciesChecker(
+            self._parameters["project"]["dir"],
+            self.get_logger(),
+            self.get_dependencies_loader(),
+        )
+
+    @diservice
     def get_dbx_sys_path_appender(self):
         from benvy.databricks.repos.setup.SysPathAppender import SysPathAppender
 
