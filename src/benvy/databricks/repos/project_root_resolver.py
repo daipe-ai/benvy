@@ -1,13 +1,20 @@
 import os
-from pathlib import Path
+import sys
 
 
-def resolve() -> str:
-    # path in DBX Repos is like /Workspace/Repos/folder/repository/src/...
-    # so we take first 4 parts which is the root of the repository
-    repository_root = os.path.join(*Path.cwd().parts[0:5])
+def resolve_project_root() -> str:
+    repository_root = resolve_repository_root()
 
     if "DAIPE_PROJECT_ROOT_DIR" in os.environ:
         return os.environ["DAIPE_PROJECT_ROOT_DIR"].format(repository_root=repository_root)
 
     return repository_root
+
+
+def resolve_repository_root() -> str:
+    # Databricks automatically adds repository root dir and current notebook dir to sys path
+    # and also sets current working directory to this current notebook dir, e.g.
+    # syspath = ["/Workspace/Repos/folder/repository", "/Workspace/Repos/folder/repository/src/dir", ...]
+    # cwd = "/Workspace/Repos/folder/repository/src/dir"
+    # So we take the shortest path that that is contained in current working directory
+    return min([path for path in sys.path if path in os.getcwd()], key=len)
