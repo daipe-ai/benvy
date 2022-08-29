@@ -1,7 +1,7 @@
 import logging
 from penvy.env.EnvConfig import EnvConfig
 from penvy.PenvyConfig import PenvyConfig
-from benvy.databricks.repos import project_root_resolver
+from benvy.databricks.repos.project_root_resolver import resolve_project_root
 
 
 class BootstrapConfig(EnvConfig):
@@ -10,7 +10,7 @@ class BootstrapConfig(EnvConfig):
 
         return {
             "project": {
-                "dir": project_root_resolver.resolve(),
+                "dir": resolve_project_root(),
             },
             "poetry": {
                 "version": poetry_version,
