@@ -12,9 +12,7 @@ def resolve_project_root() -> str:
 
 
 def resolve_repository_root() -> str:
-    # Databricks automatically adds repository root dir and current notebook dir to sys path
-    # and also sets current working directory to this current notebook dir, e.g.
-    # syspath = ["/Workspace/Repos/folder/repository", "/Workspace/Repos/folder/repository/src/dir", ...]
-    # cwd = "/Workspace/Repos/folder/repository/src/dir"
-    # So we take the shortest path that that is contained in current working directory
-    return min([path for path in sys.path if path in os.getcwd()], key=len)
+    # Databricks automatically adds repository root dir and current notebook dir to sys path, e.g.
+    # ["/Workspace/Repos/folder/repository", "/Workspace/Repos/folder/repository/src/dir", ...]
+    # So we take the shortest path that starts with '/Workspace/Repos'
+    return min([path for path in sys.path if path.startswith("/Workspace/Repos")], key=len)
