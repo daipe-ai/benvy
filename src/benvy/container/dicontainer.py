@@ -105,6 +105,15 @@ class Container(PenvyContainer):
         )
 
     @diservice
+    def get_dbx_dbr_python_checker(self):
+        from benvy.databricks.repos.install.DbrPythonChecker import DbrPythonChecker
+
+        return DbrPythonChecker(
+            self._parameters["project"]["dir"],
+            self.get_logger(),
+        )
+
+    @diservice
     def get_dbx_dbr_dependencies_checker(self):
         from benvy.databricks.repos.install.DbrDependenciesChecker import DbrDependenciesChecker
 
