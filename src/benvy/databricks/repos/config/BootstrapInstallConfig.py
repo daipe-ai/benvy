@@ -8,6 +8,7 @@ class BootstrapInstallConfig(BootstrapConfig):
             container.get_dbx_poetry_downloader(),
             container.get_dbx_poetry_install_script_downloader(),
             container.get_dbx_poetry_installer(),
+            container.get_dbx_dbr_python_checker(),
             container.get_dbx_dbr_dependencies_checker(),
             container.get_dbx_package_installer(),
         ]
