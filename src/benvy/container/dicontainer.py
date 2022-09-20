@@ -36,12 +36,6 @@ class Container(PenvyContainer):
         )
 
     @diservice
-    def get_libgit2_installer(self):
-        from benvy.git.Libgit2Installer import Libgit2Installer
-
-        return Libgit2Installer(self.get_logger())
-
-    @diservice
     def get_databricks_context(self):
         from benvy.databricks.DatabricksContext import DatabricksContext
         from benvy.databricks.dbutils.DBUtilsResolver import resolve_dbutils
