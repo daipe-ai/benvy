@@ -17,7 +17,7 @@ class BootstrapConfig(EnvConfig):
                 "home": "/root/.poetry",
                 "executable": "/root/.poetry/bin/poetry",
                 "archive_url": f"https://github.com/python-poetry/poetry/releases/download/{poetry_version}/poetry-{poetry_version}-linux.tar.gz",
-                "install_script_url": "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py",
+                "install_script_url": f"https://raw.githubusercontent.com/python-poetry/poetry/{poetry_version}/get-poetry.py",
                 "archive_path": f"/dbfs/FileStore/jars/daipe/poetry/poetry-{poetry_version}-linux.tar.gz",
                 "install_script_path": "/dbfs/FileStore/jars/daipe/poetry/get-poetry.py",
             },
