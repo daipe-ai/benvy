@@ -16,14 +16,22 @@ jobs:
           version: 1.1.8
           virtualenvs-create: true
           virtualenvs-in-project: true
+      - name: Cache virtual environment
+        id: cache-venv
+        uses: actions/cache@v2
+        with:
+          path: |
+            .venv
+            ~/.poetry/env
+          key: ${{ runner.os }}-env-${{ hashFiles('**/poetry.lock') }}-${{ hashFiles('**/environment.yml') }}
       - name: Install dependencies
         run: |
           poetry install
       - name: Formatting and Linting
         run: |
           source $VENV
-          black --check src
-          flake8 --ignore=E501,W503 src
+          poe black-check
+          poe flake8
 
   release:
     name: Release package

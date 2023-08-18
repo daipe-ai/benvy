@@ -13,7 +13,6 @@ from benvy.databricks.repos.export.ExportObject import ExportObject
 
 
 class NotebooksAndFilesExporter:
-
     _dbc_content: ZipFile = None
 
     def __init__(
