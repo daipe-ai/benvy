@@ -6,9 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: conda-incubator/setup-miniconda@v2.0.0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
         with:
-          miniconda-version: 'py38_4.8.3'
+          python-version: '3.8'
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1
         with:
