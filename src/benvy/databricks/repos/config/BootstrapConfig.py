@@ -16,9 +16,9 @@ class BootstrapConfig(EnvConfig):
                 "version": poetry_version,
                 "home": "/root/.poetry",
                 "executable": "/root/.poetry/bin/poetry",
-                "archive_url": f"https://github.com/python-poetry/poetry/releases/download/{poetry_version}/poetry-{poetry_version}-linux.tar.gz",
+                "archive_url": f"https://github.com/python-poetry/poetry/releases/download/{poetry_version}/{self.__get_archive_filename(poetry_version)}",
                 "install_script_url": f"https://raw.githubusercontent.com/python-poetry/poetry/{poetry_version}/get-poetry.py",
-                "archive_path": f"/dbfs/FileStore/jars/daipe/poetry/poetry-{poetry_version}-linux.tar.gz",
+                "archive_path": f"/dbfs/FileStore/jars/daipe/poetry/{self.__get_archive_filename(poetry_version)}",
                 "install_script_path": "/dbfs/FileStore/jars/daipe/poetry/get-poetry.py",
             },
             "logger": {
@@ -26,3 +26,6 @@ class BootstrapConfig(EnvConfig):
                 "level": logging.INFO,
             },
         }
+
+    def __get_archive_filename(self, version: str) -> str:
+        return f"poetry-{version}-linux.tar.gz" if version < "1.2.0" else f"poetry-{version}.tar.gz"
