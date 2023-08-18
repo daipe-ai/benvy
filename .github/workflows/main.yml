@@ -9,16 +9,20 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v2.0.0
         with:
           miniconda-version: 'py38_4.8.3'
-      - name: setup
+      - name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.1.8
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+      - name: Install dependencies
         run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py --silent -o get-poetry.py
-          python get-poetry.py -y --version 1.1.8
-          rm get-poetry.py
-          ~/.poetry/bin/poetry install --no-root
-      - name: black
-        run: source ~/.poetry/env && poetry run poe black-check
-      - name: flake8
-        run: source ~/.poetry/env && poetry run poe flake8
+          poetry install
+      - name: Formatting and Linting
+        run: |
+          source $VENV
+          black --check src
+          flake8 --ignore=E501,W503 src
 
   release:
     name: Release package
