@@ -2,7 +2,6 @@ from benvy.databricks.notebook.CommandsConverter import CommandsConverter
 
 
 class NotebookConverter:
-
     first_line = "# Databricks notebook source"
     cell_separator = "# COMMAND ----------"
 
