@@ -1,3 +1,4 @@
+import os
 import logging
 from penvy.env.EnvConfig import EnvConfig
 from penvy.PenvyConfig import PenvyConfig
@@ -7,6 +8,7 @@ from benvy.databricks.repos.project_root_resolver import resolve_project_root
 class BootstrapConfig(EnvConfig):
     def get_parameters(self) -> dict:
         poetry_version = PenvyConfig().get_parameters()["poetry"]["install_version"]
+        poetry_executable = os.getenv("DAIPE_POETRY_EXECUTABLE_PATH") or "/root/.poetry/bin/poetry"
 
         return {
             "project": {
@@ -15,7 +17,7 @@ class BootstrapConfig(EnvConfig):
             "poetry": {
                 "version": poetry_version,
                 "home": "/root/.poetry",
-                "executable": "/root/.poetry/bin/poetry",
+                "executable": poetry_executable,
                 "archive_url": f"https://github.com/python-poetry/poetry/releases/download/{poetry_version}/{self.__get_archive_filename(poetry_version)}",
                 "install_script_url": f"https://raw.githubusercontent.com/python-poetry/poetry/{poetry_version}/get-poetry.py",
                 "archive_path": f"/dbfs/FileStore/jars/daipe/poetry/{self.__get_archive_filename(poetry_version)}",
