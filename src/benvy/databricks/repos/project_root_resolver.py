@@ -1,18 +1,14 @@
-import os
-import sys
+from pathlib import Path
 
 
 def resolve_project_root() -> str:
-    repository_root = resolve_repository_root()
+    filesystem_root = Path("/")
+    project_root = Path.cwd()
 
-    if "DAIPE_PROJECT_ROOT_DIR" in os.environ:
-        return os.environ["DAIPE_PROJECT_ROOT_DIR"].format(repository_root=repository_root)
+    while not project_root.joinpath("pyproject.toml").exists() and project_root != filesystem_root:
+        project_root = project_root.parent
 
-    return repository_root
+    if project_root == filesystem_root:
+        raise FileNotFoundError("Cannot resolve project root directory")
 
-
-def resolve_repository_root() -> str:
-    # Databricks automatically adds repository root dir and current notebook dir to sys path, e.g.
-    # ["/Workspace/Repos/folder/repository", "/Workspace/Repos/folder/repository/src/dir", ...]
-    # So we take the shortest path that starts with '/Workspace/Repos'
-    return min([path for path in sys.path if path.startswith("/Workspace/Repos")], key=len)
+    return project_root.as_posix()
